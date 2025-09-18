@@ -24,7 +24,7 @@ jobs:
         run: |
           HELM_CHART_PATH="./charts/nginx" # Adjust to your chart's path
           HELM_CHART_NAME=$(basename $HELM_CHART_PATH)
-          HELM_CHART_VERSION=latest
+          HELM_CHART_VERSION=$(helm inspect chart $HELM_CHART_PATH | grep 'version:' | awk '{print $2}')
           helm package $HELM_CHART_PATH --version $HELM_CHART_VERSION
 
       - name: Login to GitHub Container Registry
