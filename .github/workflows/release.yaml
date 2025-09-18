@@ -22,7 +22,7 @@ jobs:
 
       - name: Package Helm chart
         run: |
-          HELM_CHART_PATH="./charts/" # Adjust to your chart's path
+          HELM_CHART_PATH="./charts/nginx" # Adjust to your chart's path
           HELM_CHART_NAME=$(basename $HELM_CHART_PATH)
           HELM_CHART_VERSION=latest
           helm package $HELM_CHART_PATH --version $HELM_CHART_VERSION
@@ -33,7 +33,7 @@ jobs:
 
       - name: Push Helm chart to GHCR
         run: |
-          HELM_CHART_PATH="./charts/" # Adjust to your chart's path
+          HELM_CHART_PATH="./charts/nginx" # Adjust to your chart's path
           HELM_CHART_NAME=$(basename $HELM_CHART_PATH)
           HELM_CHART_VERSION=$(helm inspect chart $HELM_CHART_PATH | grep 'version:' | awk '{print $2}')
           helm push ${HELM_CHART_NAME}-${HELM_CHART_VERSION}.tgz oci://ghcr.io/${{ github.repository_owner }}/charts
